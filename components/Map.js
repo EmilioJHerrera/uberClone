@@ -8,14 +8,18 @@ import MapViewDirections from 'react-native-maps-directions';
 
 import tw from 'tailwind-react-native-classnames';
 import { useSelector } from 'react-redux';
-import { selectOrigin, selectDestination } from '../slices/navSlice';
+import { selectOrigin, selectDestination, setTraveLtime } from '../slices/navSlice';
 
 import {useRef, useEffect} from 'react';
+
+import { useDispatch } from 'react-redux';
 
 export default function Map() {
 
     const origin = useSelector(selectOrigin)
     const destination = useSelector(selectDestination)
+
+    const dispatch = useDispatch()
 
     const mapRef = useRef(null);
 
@@ -23,10 +27,30 @@ useEffect(()=> {
     if (!origin || !destination) {
         return
     }
-    mapRef.current.fitToSuppliedMarkers([ 'destination',"origin"],{
+    mapRef.current.fitToSuppliedMarkers([ 'origin','destination'],{
         edgePadding: {top:50, right:50, bottom:50, left:50},
     })
-},[origin, destination])
+},[origin, destination]);
+
+useEffect(()=>{
+  if (!origin || !destination) return
+
+  const getTravelTime= async () =>{
+    const URL = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${origin.description}&destinations=${destination.description}&key=AIzaSyCPYXspELOyDiC2avsXxxvH_iIjKk_Vf94`
+
+    try {
+      const respuesta = await fetch(URL);
+      const respuestaJSON = await respuesta.json();
+      console.log(respuestaJSON)
+      dispatch(setTraveLtime(respuestaJSON.rows[0].elements[0]))
+    } catch (error) {
+      console.log('error travelTime:',error)
+    }
+
+  }
+  getTravelTime();
+
+},[origin, destination]);
 
     return (
     <View>

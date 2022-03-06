@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import NavigateCard from '../components/NavigateCard';
 import RideOptionsCar from '../components/RideOptionsCar';
 
-
+import { Entypo } from '@expo/vector-icons';
 
 const MapScreen = () => {
  
@@ -16,6 +16,11 @@ const MapScreen = () => {
 
   return (
     <View>
+  
+  <TouchableOpacity style={tw`bg-gray-100 absolute top-16 left-8 z-50 rounded-full shadow-lg`}>
+  <Entypo name="menu" size={24} color="black" />
+  </TouchableOpacity>
+  
        <View style={[tw`h-1/2`, styles.mapContainer]}>
          <Map/> 
        </View>
