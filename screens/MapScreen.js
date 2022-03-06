@@ -9,15 +9,19 @@ import NavigateCard from '../components/NavigateCard';
 import RideOptionsCar from '../components/RideOptionsCar';
 
 import { Entypo } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const MapScreen = () => {
  
   const Stack = createNativeStackNavigator();
+  const navigation = useNavigation();
 
   return (
     <View>
   
-  <TouchableOpacity style={tw`bg-gray-100 absolute top-16 left-8 z-50 rounded-full shadow-lg`}>
+  <TouchableOpacity 
+  onPress={()=>navigation.navigate("Home")}
+  style={tw`bg-gray-100 absolute top-16 left-8 z-50 p-3 rounded-full shadow-lg`}>
   <Entypo name="menu" size={24} color="black" />
   </TouchableOpacity>
   
@@ -50,12 +54,12 @@ const MapScreen = () => {
 
 const styles = StyleSheet.create({
  mapContainer: {
-   backgroundColor: 'blue',
+   backgroundColor: 'transparent',
    
     ...StyleSheet.absoluteFillObject,
  },
  prueba:{
-    backgroundColor: 'red',
+    backgroundColor: 'transparent',
     marginTop: 500,
  }
 });

@@ -14,6 +14,10 @@ import {useRef, useEffect} from 'react';
 
 import { useDispatch } from 'react-redux';
 
+import { apiKey } from '../apiKey';
+
+import { Dimensions } from 'react-native';
+
 export default function Map() {
 
     const origin = useSelector(selectOrigin)
@@ -23,7 +27,9 @@ export default function Map() {
 
     const mapRef = useRef(null);
 
-useEffect(()=> {
+
+
+    useEffect(()=> {
     if (!origin || !destination) {
         return
     }
@@ -36,12 +42,12 @@ useEffect(()=>{
   if (!origin || !destination) return
 
   const getTravelTime= async () =>{
-    const URL = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${origin.description}&destinations=${destination.description}&key=AIzaSyCPYXspELOyDiC2avsXxxvH_iIjKk_Vf94`
+    const URL = `https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=${origin.description}&destinations=${destination.description}&key=${apiKey}`
 
     try {
       const respuesta = await fetch(URL);
       const respuestaJSON = await respuesta.json();
-      console.log(respuestaJSON)
+      // console.log(respuestaJSON)
       dispatch(setTraveLtime(respuestaJSON.rows[0].elements[0]))
     } catch (error) {
       console.log('error travelTime:',error)
@@ -54,7 +60,7 @@ useEffect(()=>{
 
     return (
     <View>
-      <Text> Map</Text>
+      {/* <Text> Map</Text> */}
       <MapView
         ref={mapRef}
       mapType='mutedStandard'
@@ -71,7 +77,7 @@ useEffect(()=>{
              <MapViewDirections
              origin={origin.description}
              destination={destination.description}
-             apikey='AIzaSyCPYXspELOyDiC2avsXxxvH_iIjKk_Vf94'
+             apikey={apiKey}
              strokeWidth={3}
              strokeColor='black'
            />
@@ -114,10 +120,12 @@ useEffect(()=>{
     </View>
   )
 }
+const halfWindowHeight = (Dimensions.get('window').height) / 2;
 
 const styles = StyleSheet.create({
     map: {
       ...StyleSheet.absoluteFillObject,
-      minHeight: 400,
+      // minHeight: 400,
+      height: halfWindowHeight,
     },
 });

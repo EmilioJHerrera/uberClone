@@ -77,7 +77,7 @@ const RideOptionsCar = () => {
             <Text style={tw` text-xl`}>
             {new Intl.NumberFormat('en-US', {
               style: 'currency',
-              currency: 'USD',
+              currency: 'EUR',
             }).format(
               (travelTimeInfo?.distance.value * multiplier * auxiliarPrice) /100
             )}

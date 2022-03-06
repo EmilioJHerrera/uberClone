@@ -10,6 +10,8 @@ import { setDestination } from '../slices/navSlice';
 import { useNavigation } from '@react-navigation/native';
 import NavFavourites from './NavFavourites';
 
+import { apiKey } from '../apiKey';
+
 const NavigateCard = () => {
 
     const dispatch = useDispatch();
@@ -30,8 +32,8 @@ const NavigateCard = () => {
             placeholder='Where to?'
                 onPress={(data, details = null)  => {
                 // 'details' is provided when fetchDetails = true
-                    console.log('data:', data);
-                    console.log('details', details);
+                    // console.log('data:', data);
+                    // console.log('details', details);
                     dispatch(setDestination({
                         location: details.geometry.location,
                         description: data.description,
@@ -40,8 +42,8 @@ const NavigateCard = () => {
          
                     }}
           query={{
-          key: 'AIzaSyCPYXspELOyDiC2avsXxxvH_iIjKk_Vf94',
-          language: 'en',
+          key: apiKey,
+          language: 'es',
         }}
         />
 
